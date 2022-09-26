@@ -73,10 +73,15 @@ class RealLabelsImagenet:
 
                 temp = []
                 with torch.inference_mode():
-                    for ground_truth_id, ground_truth in enumerate(self.real_labels[filename]):
-                        temp.append(
-                            self.loss(output[ground_truth_id], torch.Tensor([ground_truth])[0].long().cuda()).item()
+                    temp.extend(
+                        self.loss(
+                            output[ground_truth_id],
+                            torch.Tensor([ground_truth])[0].long().cuda(),
+                        ).item()
+                        for ground_truth_id, ground_truth in enumerate(
+                            self.real_labels[filename]
                         )
+                    )
 
                 self.losses.append({"filename": filename, "loss": min(temp)})
 
