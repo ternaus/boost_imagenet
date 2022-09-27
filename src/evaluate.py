@@ -11,14 +11,11 @@ from albumentations.pytorch import ToTensorV2
 from torch import nn
 from tqdm import tqdm
 
+from src.utils import load_rgb
+
 MEAN = (0.485, 0.456, 0.406)
 STD = (0.229, 0.224, 0.225)
 TARGET_SIZE = 224
-
-
-def load_rgb(image_path: Path | str) -> np.ndarray:
-    image = cv2.imread(str(image_path))
-    return cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
 
 class Dataset:
