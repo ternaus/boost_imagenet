@@ -32,10 +32,8 @@ def main():
 
     for element in tqdm(urls):
         annotation_file_name = Path(element["filename"]).with_suffix(".xml")
-        with open(args.json_annotations / annotation_file_name, encoding="utf-8") as file:
-            xml = xml2dict.parse(file.read())
 
-        annotation = xml2dict.parse(xml)["annotation"]["object"]
+        annotation = xml2dict.parse(args.json_annotations / annotation_file_name)["annotation"]["object"]
 
         if isinstance(annotation, list):
             class_id = annotation[0]["name"]
